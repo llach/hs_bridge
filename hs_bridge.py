@@ -22,21 +22,25 @@ class RsbServer():
         goal = ShakeHandActionGoal()
 
         print("------------- received data -------------")
-        print("Received event: \n %s \n" % event)
+        print("received event: \n %s \n" % event)
 
         #add correct group_name
         if event.data == 'left':
             goal.goal.group_name = '\'left_arm\''
-        if event.data == 'right':
+            print("publishing goal: \n %s \n" % goal)
+
+            #publish goal
+            pub.publish(goal)
+        elif event.data == 'right':
             goal.goal.group_name = '\'right_arm\''
+            print("publishing goal: \n %s \n" % goal)
+            
+            #publish goal
+            pub.publish(goal)
+        else:
+            print("got wrong data, so nothing will be published")
 
-
-        print("Publishing goal: \n %s \n" % goal)
-
-        #publish goal
-        pub.publish(goal)
-
-        print("------------- published successfully -------------")
+        print("------------- publishing done -------------")
 
 
     def __init__(self, pub, scope):
